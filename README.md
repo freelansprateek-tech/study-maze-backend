@@ -3,9 +3,12 @@ title: Study Maze Backend
 emoji: 🧭
 colorFrom: indigo
 colorTo: purple
-sdk: docker
-app_port: 7860
+sdk: gradio
+sdk_version: 6.32.0
+python_version: "3.12"
+app_file: space_app.py
 pinned: false
+short_description: API for Study Maze, answers chip questions from official docs
 ---
 
 # Chip-Aware CP-RAG for ESP32 — Backend
