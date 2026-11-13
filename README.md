@@ -8,7 +8,7 @@ sdk_version: 6.32.0
 python_version: "3.12"
 app_file: space_app.py
 pinned: false
-short_description: API for Study Maze, answers chip questions from official docs
+short_description: API for Study Maze, a study buddy for chip questions
 ---
 
 # Chip-Aware CP-RAG for ESP32 — Backend
