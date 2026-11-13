@@ -1,0 +1,63 @@
+{
+  "name": "ESP32-family chip-specific QA benchmark",
+  "version": "1.0",
+  "description": "Chip-specific questions with exact answers taken from the official documentation in the knowledge base. Extend this file to 100-150 items by appending objects with the same fields.",
+  "schema": {
+    "id": "unique string",
+    "chip": "esp32 | esp32-s3 | esp32-c3 | esp32-c6 | esp32-s2",
+    "category": "free-form topic label used for per-category breakdowns",
+    "question": "the question, written without the chip name (the chip comes from the selector)",
+    "answers": "list of accepted answer strings; a prediction matches if it contains any one of them",
+    "all_of": "optional list of strings that must ALL appear in the prediction (for multi-part answers); when present it replaces `answers` for Exact Match",
+    "source_chunk_id": "id of the knowledge-base chunk that contains the answer"
+  },
+  "items": [
+    {"id": "esp32-01", "chip": "esp32", "category": "adc", "question": "How many ADC channels does the chip support in total?", "answers": ["18"], "source_chunk_id": "esp32-ds-adc"},
+    {"id": "esp32-02", "chip": "esp32", "category": "dac", "question": "Which GPIO pins are the two DAC outputs?", "answers": ["GPIO25 and GPIO26"], "all_of": ["GPIO25", "GPIO26"], "source_chunk_id": "esp32-ds-dac-touch"},
+    {"id": "esp32-03", "chip": "esp32", "category": "strapping", "question": "Which strapping pin selects the internal LDO (VDD_SDIO) voltage at reset?", "answers": ["GPIO12", "MTDI"], "source_chunk_id": "esp32-ds-strapping"},
+    {"id": "esp32-04", "chip": "esp32", "category": "power", "question": "What is the Deep-sleep current with the RTC timer and RTC memory powered?", "answers": ["10 µA", "10 uA"], "source_chunk_id": "esp32-ds-electrical"},
+    {"id": "esp32-05", "chip": "esp32", "category": "flash", "question": "At which flash offset is the second-stage bootloader written?", "answers": ["0x1000"], "source_chunk_id": "esp32-idf-flash-offsets"},
+    {"id": "esp32-06", "chip": "esp32", "category": "cpu", "question": "Which Xtensa processor core does the chip use?", "answers": ["LX6"], "source_chunk_id": "esp32-ds-overview"},
+    {"id": "esp32-07", "chip": "esp32", "category": "radio", "question": "Which Bluetooth version does the chip support?", "answers": ["4.2", "v4.2"], "source_chunk_id": "esp32-ds-overview"},
+    {"id": "esp32-08", "chip": "esp32", "category": "pwm", "question": "How many LED PWM channels are available?", "answers": ["16"], "source_chunk_id": "esp32-ds-peripherals"},
+    {"id": "esp32-09", "chip": "esp32", "category": "touch", "question": "How many capacitive touch-sensing GPIOs are there?", "answers": ["10"], "source_chunk_id": "esp32-ds-dac-touch"},
+    {"id": "esp32-10", "chip": "esp32", "category": "electrical", "question": "What is the maximum high-level source current of a GPIO at maximum drive strength?", "answers": ["40 mA"], "source_chunk_id": "esp32-ds-electrical"},
+
+    {"id": "esp32s3-01", "chip": "esp32-s3", "category": "gpio", "question": "How many programmable GPIOs does the chip provide?", "answers": ["45"], "source_chunk_id": "esp32s3-ds-overview"},
+    {"id": "esp32s3-02", "chip": "esp32-s3", "category": "usb", "question": "Which GPIO is USB D+?", "answers": ["GPIO20"], "source_chunk_id": "esp32s3-ds-usb"},
+    {"id": "esp32s3-03", "chip": "esp32-s3", "category": "strapping", "question": "What are the strapping pins?", "answers": ["GPIO0, GPIO3, GPIO45 and GPIO46"], "all_of": ["GPIO0", "GPIO3", "GPIO45", "GPIO46"], "source_chunk_id": "esp32s3-ds-strapping"},
+    {"id": "esp32s3-04", "chip": "esp32-s3", "category": "power", "question": "What is the Deep-sleep current with RTC memory powered and RTC peripherals powered down?", "answers": ["7 µA", "7 uA"], "source_chunk_id": "esp32s3-ds-power"},
+    {"id": "esp32s3-05", "chip": "esp32-s3", "category": "adc", "question": "How many ADC channels are supported?", "answers": ["20"], "source_chunk_id": "esp32s3-ds-adc-touch"},
+    {"id": "esp32s3-06", "chip": "esp32-s3", "category": "memory", "question": "How much internal SRAM does the chip have?", "answers": ["512 KB"], "source_chunk_id": "esp32s3-ds-overview"},
+    {"id": "esp32s3-07", "chip": "esp32-s3", "category": "uart", "question": "Which GPIO is the default UART0 TX pin?", "answers": ["GPIO43"], "source_chunk_id": "esp32s3-ds-peripherals"},
+    {"id": "esp32s3-08", "chip": "esp32-s3", "category": "flash", "question": "At which flash offset is the second-stage bootloader written?", "answers": ["0x0"], "source_chunk_id": "esp32s3-idf-adc-boot"},
+    {"id": "esp32s3-09", "chip": "esp32-s3", "category": "adc", "question": "What is the upper limit of the effective ADC measurement range at the highest attenuation (ATTEN3)?", "answers": ["2900 mV", "2900"], "source_chunk_id": "esp32s3-idf-adc-boot"},
+
+    {"id": "esp32c3-01", "chip": "esp32-c3", "category": "cpu", "question": "What is the maximum CPU clock frequency?", "answers": ["160 MHz"], "source_chunk_id": "esp32c3-ds-overview"},
+    {"id": "esp32c3-02", "chip": "esp32-c3", "category": "usb", "question": "Which GPIO is USB D-?", "answers": ["GPIO18"], "source_chunk_id": "esp32c3-ds-usb"},
+    {"id": "esp32c3-03", "chip": "esp32-c3", "category": "strapping", "question": "Which GPIO must be held low at reset to enter download mode?", "answers": ["GPIO9"], "source_chunk_id": "esp32c3-ds-strapping"},
+    {"id": "esp32c3-04", "chip": "esp32-c3", "category": "adc", "question": "How many ADC channels does the chip have in total?", "answers": ["6"], "source_chunk_id": "esp32c3-ds-adc"},
+    {"id": "esp32c3-05", "chip": "esp32-c3", "category": "power", "question": "What is the Deep-sleep current with the RTC timer and RTC memory powered?", "answers": ["5 µA", "5 uA"], "source_chunk_id": "esp32c3-ds-power"},
+    {"id": "esp32c3-06", "chip": "esp32-c3", "category": "pwm", "question": "How many LED PWM channels are available?", "answers": ["6"], "source_chunk_id": "esp32c3-ds-peripherals"},
+    {"id": "esp32c3-07", "chip": "esp32-c3", "category": "uart", "question": "Which GPIO is the default UART0 RX pin?", "answers": ["GPIO20"], "source_chunk_id": "esp32c3-ds-peripherals"},
+    {"id": "esp32c3-08", "chip": "esp32-c3", "category": "memory", "question": "How much RTC SRAM does the chip have?", "answers": ["8 KB"], "source_chunk_id": "esp32c3-ds-overview"},
+
+    {"id": "esp32c6-01", "chip": "esp32-c6", "category": "adc", "question": "How many ADC channels does the chip have?", "answers": ["7"], "source_chunk_id": "esp32c6-ds-adc"},
+    {"id": "esp32c6-02", "chip": "esp32-c6", "category": "usb", "question": "Which GPIO is USB D+?", "answers": ["GPIO13"], "source_chunk_id": "esp32c6-ds-usb"},
+    {"id": "esp32c6-03", "chip": "esp32-c6", "category": "cpu", "question": "What is the maximum clock frequency of the low-power RISC-V core?", "answers": ["20 MHz"], "source_chunk_id": "esp32c6-ds-overview"},
+    {"id": "esp32c6-04", "chip": "esp32-c6", "category": "can", "question": "How many TWAI controllers does the chip have?", "answers": ["2"], "source_chunk_id": "esp32c6-ds-peripherals"},
+    {"id": "esp32c6-05", "chip": "esp32-c6", "category": "radio", "question": "What is the data rate of the IEEE 802.15.4 radio?", "answers": ["250 kbps"], "source_chunk_id": "esp32c6-ds-802154"},
+    {"id": "esp32c6-06", "chip": "esp32-c6", "category": "radio", "question": "Which Wi-Fi 6 feature lets a battery-powered station negotiate long sleep intervals with the access point?", "answers": ["Target Wake Time", "TWT"], "source_chunk_id": "esp32c6-ds-wifi6"},
+    {"id": "esp32c6-07", "chip": "esp32-c6", "category": "gpio", "question": "How many programmable GPIOs does the QFN40 package provide?", "answers": ["30"], "source_chunk_id": "esp32c6-ds-gpio"},
+    {"id": "esp32c6-08", "chip": "esp32-c6", "category": "uart", "question": "Which GPIO is the default UART0 TX pin?", "answers": ["GPIO16"], "source_chunk_id": "esp32c6-ds-gpio"},
+
+    {"id": "esp32s2-01", "chip": "esp32-s2", "category": "adc", "question": "What is the resolution of the SAR ADCs in bits?", "answers": ["12-bit", "12 bit", "12 bits"], "source_chunk_id": "esp32s2-ds-adc-dac"},
+    {"id": "esp32s2-02", "chip": "esp32-s2", "category": "dac", "question": "Which GPIO pins are the two DAC outputs?", "answers": ["GPIO17 and GPIO18"], "all_of": ["GPIO17", "GPIO18"], "source_chunk_id": "esp32s2-ds-adc-dac"},
+    {"id": "esp32s2-03", "chip": "esp32-s2", "category": "gpio", "question": "How many programmable GPIOs does the chip provide?", "answers": ["43"], "source_chunk_id": "esp32s2-ds-overview"},
+    {"id": "esp32s2-04", "chip": "esp32-s2", "category": "touch", "question": "How many capacitive touch-sensing GPIOs are there?", "answers": ["14"], "source_chunk_id": "esp32s2-ds-touch"},
+    {"id": "esp32s2-05", "chip": "esp32-s2", "category": "strapping", "question": "Which strapping pin selects the VDD_SPI voltage?", "answers": ["GPIO45"], "source_chunk_id": "esp32s2-ds-strapping"},
+    {"id": "esp32s2-06", "chip": "esp32-s2", "category": "strapping", "question": "Which strapping pin is input-only?", "answers": ["GPIO46"], "source_chunk_id": "esp32s2-ds-strapping"},
+    {"id": "esp32s2-07", "chip": "esp32-s2", "category": "memory", "question": "How much internal SRAM does the chip have?", "answers": ["320 KB"], "source_chunk_id": "esp32s2-ds-overview"},
+    {"id": "esp32s2-08", "chip": "esp32-s2", "category": "pwm", "question": "How many LED PWM channels are available?", "answers": ["8"], "source_chunk_id": "esp32s2-ds-peripherals"}
+  ]
+}

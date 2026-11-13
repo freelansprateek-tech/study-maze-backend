@@ -1,0 +1,251 @@
+{
+  "description": "Seed knowledge base for Chip-Aware CP-RAG. Official-documentation entries are short paraphrases of Espressif datasheets, Technical Reference Manuals and the ESP-IDF Programming Guide. Entries with source_type 'forum' or 'github_issue' are synthetic community-style threads written for this project to provide realistic noisy context; they are not copies of real posts.",
+  "records": [
+    {"id": "esp32-ds-overview", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "1 Overview - CPU, Memory and Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "The ESP32 is a 2.4 GHz Wi-Fi and Bluetooth combo SoC built around the Xtensa 32-bit LX6 microprocessor. The ESP32-D0WD family is dual-core and runs at up to 240 MHz. It supports 802.11 b/g/n Wi-Fi with data rates up to 150 Mbps, and Bluetooth v4.2 BR/EDR together with Bluetooth Low Energy. Internal memory comprises 448 KB of ROM, 520 KB of SRAM and 16 KB of SRAM in the RTC domain. The ESP32 has no native USB interface, so development boards add an external USB-to-UART bridge chip for flashing and for the serial console."},
+
+    {"id": "esp32-ds-gpio", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "2.2 Pin Overview - GPIO",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "The ESP32 provides 34 programmable GPIOs. GPIO34, GPIO35, GPIO36, GPIO37, GPIO38 and GPIO39 are input-only pins: they cannot drive an output and they have no internal pull-up or pull-down resistors. GPIO6 to GPIO11 are connected to the integrated SPI flash on modules such as the ESP32-WROOM-32 and are not recommended for other uses. GPIO1 (U0TXD) and GPIO3 (U0RXD) are the default UART0 pins used for programming and for the console."},
+
+    {"id": "esp32-ds-strapping", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "2.4 Strapping Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "The ESP32 has five strapping pins: MTDI (GPIO12), GPIO0, GPIO2, MTDO (GPIO15) and GPIO5. Their levels are sampled when the chip is released from reset. GPIO0 and GPIO2 select the boot mode: GPIO0 high selects SPI boot, while GPIO0 low together with GPIO2 low selects download boot. MTDI (GPIO12) selects the voltage of the internal LDO VDD_SDIO that powers the flash: low, the default through its internal pull-down, gives 3.3 V, and high gives 1.8 V. Pulling GPIO12 high on a module with 3.3 V flash prevents the chip from booting."},
+
+    {"id": "esp32-ds-adc", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "4.1.2 Analog-to-Digital Converter (ADC)",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "The ESP32 integrates two 12-bit SAR ADCs and supports measurements on 18 channels in total. ADC1 has 8 channels on GPIO32 to GPIO39. ADC2 has 10 channels on GPIO0, GPIO2, GPIO4, GPIO12 to GPIO15 and GPIO25 to GPIO27. ADC2 is shared with the Wi-Fi driver, so ADC2 channels can only be read when Wi-Fi is not started. Designs that need analog readings while Wi-Fi is active should use ADC1."},
+
+    {"id": "esp32-ds-dac-touch", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "4.1.3 DAC, Touch Sensor and Hall Sensor",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "Two 8-bit DAC channels convert digital values into analog voltages. DAC channel 1 is on GPIO25 and DAC channel 2 is on GPIO26. The ESP32 also has 10 capacitive touch-sensing GPIOs, named T0 to T9, which can wake the chip from Deep-sleep, and an integrated Hall sensor."},
+
+    {"id": "esp32-ds-electrical", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "5 Electrical Characteristics",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "The ESP32 operates from a supply voltage of 2.3 V to 3.6 V. With a single supply, 3.3 V and an output current of at least 500 mA are recommended. In Deep-sleep mode with the RTC timer and RTC memory powered the chip draws 10 µA, and in Hibernation mode with only the RTC timer it draws 5 µA. At 3.3 V with the pad drive strength set to maximum, a GPIO can source a high-level current of 40 mA."},
+
+    {"id": "esp32-ds-peripherals", "chip": "esp32", "source_type": "datasheet", "title": "ESP32 Series Datasheet", "section": "4.1 Peripherals Overview",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf",
+     "text": "ESP32 digital peripherals include 3 UART interfaces, 2 I2C interfaces, 4 SPI interfaces of which HSPI and VSPI are available for general use, 2 I2S interfaces, an LED PWM controller with up to 16 channels, a motor control PWM, 1 TWAI controller compatible with CAN 2.0, an Ethernet MAC interface, an SD/SDIO/MMC host controller, an SDIO slave controller, an 8-channel RMT infrared remote controller and a pulse counter with 8 units."},
+
+    {"id": "esp32-idf-adc", "chip": "esp32", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32) - ADC Oneshot Mode", "section": "Attenuation and Hardware Limitations",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/adc_oneshot.html",
+     "text": "On the ESP32, an ADC channel configured with ADC_ATTEN_DB_12 (called ADC_ATTEN_DB_11 in older ESP-IDF releases) has a suggested measurable input range of 150 mV to 2450 mV. With ADC_ATTEN_DB_0 the suggested range is 100 mV to 950 mV. Because ADC2 is also used by Wi-Fi on the ESP32, a read on an ADC2 channel while the Wi-Fi driver is running fails with a timeout error. The ESP32 raw result is 12 bits wide, from 0 to 4095."},
+
+    {"id": "esp32-idf-flash-offsets", "chip": "esp32", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32) - Bootloader", "section": "Flash Layout",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/bootloader.html",
+     "text": "On the ESP32 the second-stage bootloader is flashed at offset 0x1000 in SPI flash. The partition table is flashed at the default offset 0x8000 and the factory application at 0x10000. The first-stage bootloader in ROM loads the second-stage bootloader from 0x1000, which then reads the partition table to find the application to start."},
+
+    {"id": "esp32s2-ds-overview", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "1 Overview - CPU, Memory and Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "The ESP32-S2 is a Wi-Fi SoC with an Xtensa single-core 32-bit LX7 microprocessor running at up to 240 MHz. It supports 802.11 b/g/n Wi-Fi in the 2.4 GHz band. The ESP32-S2 has no Bluetooth radio: neither Bluetooth Classic nor Bluetooth LE is available. Internal memory comprises 128 KB of ROM, 320 KB of SRAM and 16 KB of RTC SRAM. The chip provides 43 programmable GPIOs."},
+
+    {"id": "esp32s2-ds-usb", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "4.1 USB OTG",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "The ESP32-S2 integrates a full-speed USB OTG interface with an on-chip transceiver, compliant with the USB 1.1 specification. GPIO19 is USB D- and GPIO20 is USB D+. The ROM bootloader supports download over USB using USB CDC and DFU; holding GPIO0 low while the chip resets enters download mode. The ESP32-S2 does not include a USB Serial/JTAG controller, so a USB console requires the USB OTG peripheral driven by software."},
+
+    {"id": "esp32s2-ds-strapping", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "2.4 Strapping Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "The ESP32-S2 has three strapping pins: GPIO0, GPIO45 and GPIO46. GPIO0 and GPIO46 select the boot mode: GPIO0 high selects SPI boot, and GPIO0 low together with GPIO46 low selects download boot. GPIO45 selects the VDD_SPI voltage: low gives 3.3 V and high gives 1.8 V. GPIO46 is an input-only pin with an internal pull-down that is enabled by default."},
+
+    {"id": "esp32s2-ds-adc-dac", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "4.2 Analog Peripherals - ADC and DAC",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "The ESP32-S2 integrates two 12-bit SAR ADCs that support measurements on up to 20 channels. ADC1 channels are on GPIO1 to GPIO10 and ADC2 channels are on GPIO11 to GPIO20. Two 8-bit DAC channels are available: DAC_1 on GPIO17 and DAC_2 on GPIO18. A built-in temperature sensor measures the internal temperature of the chip."},
+
+    {"id": "esp32s2-ds-touch", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "4.2 Analog Peripherals - Touch Sensor",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "The ESP32-S2 has 14 capacitive touch-sensing GPIOs, on GPIO1 to GPIO14. The touch sensor supports a waterproof design with a guard pad and shield electrode, proximity sensing, and waking the chip from Deep-sleep on touch. Touch measurements can run on the ULP coprocessor while the main CPU sleeps."},
+
+    {"id": "esp32s2-ds-peripherals", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "4.1 Digital Peripherals Overview",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "ESP32-S2 digital peripherals include 2 UART interfaces, 2 I2C interfaces, 4 SPI interfaces of which SPI2 (FSPI) and SPI3 are available for general use, 1 I2S interface, an LED PWM controller with 8 channels, a 4-channel RMT controller, a pulse counter with 4 units and 1 TWAI controller. Parallel LCD and DVP camera interfaces are implemented through the I2S peripheral."},
+
+    {"id": "esp32s2-ds-flash-pins", "chip": "esp32-s2", "source_type": "datasheet", "title": "ESP32-S2 Series Datasheet", "section": "2.2 Pin Overview - Restrictions",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf",
+     "text": "On the ESP32-S2, GPIO26 to GPIO32 are usually connected to the SPI flash and PSRAM and are not recommended for other uses. On the ESP32-S2 the second-stage bootloader is flashed at offset 0x1000, the partition table at 0x8000 and the factory application at 0x10000."},
+
+    {"id": "esp32s2-idf-adc", "chip": "esp32-s2", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32-S2) - ADC Oneshot Mode", "section": "Attenuation and Resolution",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32s2/api-reference/peripherals/adc_oneshot.html",
+     "text": "On the ESP32-S2, the datasheet gives an effective ADC measurement range of 0 mV to 2300 mV at the highest attenuation setting (ATTEN3) and 0 mV to 700 mV at the lowest (ATTEN0)."},
+
+    {"id": "esp32s3-ds-overview", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "1 Overview - CPU, Memory and Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "The ESP32-S3 is a Wi-Fi and Bluetooth LE SoC with an Xtensa dual-core 32-bit LX7 microprocessor running at up to 240 MHz. It supports 802.11 b/g/n Wi-Fi in the 2.4 GHz band and Bluetooth 5 (LE) with the 2 Mbps PHY and long-range Coded PHY. Bluetooth Classic is not supported. Internal memory comprises 384 KB of ROM, 512 KB of SRAM and 16 KB of RTC SRAM. The chip provides 45 programmable GPIOs and adds vector instructions that accelerate neural-network and signal-processing workloads."},
+
+    {"id": "esp32s3-ds-usb", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "4.1 USB OTG and USB Serial/JTAG Controller",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "The ESP32-S3 integrates a full-speed USB OTG interface and a USB Serial/JTAG controller, which share one internal USB PHY. GPIO19 is USB D- and GPIO20 is USB D+. The USB Serial/JTAG controller allows flashing, console output and JTAG debugging over a single USB cable with no external bridge chip. By default the internal PHY is connected to the USB Serial/JTAG controller."},
+
+    {"id": "esp32s3-ds-strapping", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "2.6 Strapping Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "The ESP32-S3 has four strapping pins: GPIO0, GPIO3, GPIO45 and GPIO46. GPIO0 and GPIO46 select the boot mode: GPIO0 high selects SPI boot, and GPIO0 low together with GPIO46 low selects download boot. GPIO45 selects the VDD_SPI voltage: low gives 3.3 V and high gives 1.8 V. GPIO3 selects the source of the JTAG signals."},
+
+    {"id": "esp32s3-ds-adc-touch", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "4.2 Analog Peripherals - ADC and Touch Sensor",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "The ESP32-S3 integrates two 12-bit SAR ADCs that support measurements on 20 channels. ADC1 channels are on GPIO1 to GPIO10 and ADC2 channels are on GPIO11 to GPIO20. The ESP32-S3 has no DAC. It provides 14 capacitive touch-sensing GPIOs, on GPIO1 to GPIO14, and a built-in temperature sensor."},
+
+    {"id": "esp32s3-ds-flash-pins", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "2.3 Pin Overview - Flash and PSRAM Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "On the ESP32-S3, GPIO26 to GPIO32 are usually connected to the SPI flash and PSRAM and are not recommended for other uses. When the chip or module uses Octal SPI flash or Octal SPI PSRAM, for example the ESP32-S3-WROOM-1 N8R8 and N16R8 variants, GPIO33 to GPIO37 are also connected to the flash or PSRAM and are not available for other uses."},
+
+    {"id": "esp32s3-ds-power", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "5 Electrical Characteristics - Power Consumption",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "The ESP32-S3 operates from a supply voltage of 3.0 V to 3.6 V. In Deep-sleep mode with RTC memory powered and RTC peripherals powered down, the chip draws 7 µA. With both RTC memory and RTC peripherals powered it draws 8 µA. In the power-off state, with CHIP_PU held low, it draws 1 µA."},
+
+    {"id": "esp32s3-ds-peripherals", "chip": "esp32-s3", "source_type": "datasheet", "title": "ESP32-S3 Series Datasheet", "section": "4.1 Digital Peripherals Overview",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf",
+     "text": "ESP32-S3 digital peripherals include 3 UART interfaces, 2 I2C interfaces, 4 SPI interfaces of which SPI2 and SPI3 are available for general use, 2 I2S interfaces, an LED PWM controller with 8 channels, an RMT controller with 4 transmit and 4 receive channels, a pulse counter with 4 units, 2 MCPWM units, 1 TWAI controller, an SD/MMC host, an LCD interface and a DVP camera interface. The default UART0 pins are GPIO43 (U0TXD) and GPIO44 (U0RXD)."},
+
+    {"id": "esp32s3-idf-adc-boot", "chip": "esp32-s3", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32-S3) - ADC and Flash Layout", "section": "Attenuation; Bootloader Offset",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/api-reference/peripherals/adc_oneshot.html",
+     "text": "On the ESP32-S3, the datasheet gives an effective ADC measurement range of 0 mV to 2900 mV at the highest attenuation setting (ATTEN3), and the raw result is 12 bits wide. On the ESP32-S3 the second-stage bootloader is flashed at offset 0x0 in SPI flash, not at 0x1000. The partition table remains at the default offset 0x8000 and the factory application at 0x10000."},
+
+    {"id": "esp32s3-idf-usb-console", "chip": "esp32-s3", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32-S3) - USB Serial/JTAG Controller Console", "section": "Configuration and Limitations",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/api-guides/usb-serial-jtag-console.html",
+     "text": "To send the console to the built-in USB port of the ESP32-S3, set the option CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG in menuconfig under the channel for console output. No external USB-to-UART bridge is then needed. The USB Serial/JTAG controller stops working while the chip is in Deep-sleep or Light-sleep, so the host sees the serial port disconnect and reconnect around each sleep period."},
+
+    {"id": "esp32c3-ds-overview", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "1 Overview - CPU, Memory and Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "The ESP32-C3 is a Wi-Fi and Bluetooth LE SoC built around a 32-bit RISC-V single-core processor running at up to 160 MHz. It supports 802.11 b/g/n Wi-Fi in the 2.4 GHz band and Bluetooth 5 (LE). Internal memory comprises 384 KB of ROM, 400 KB of SRAM, of which 16 KB is used for cache, and 8 KB of RTC SRAM. The chip provides 22 programmable GPIOs, or 16 on variants with in-package flash. The ESP32-C3 has no ULP coprocessor."},
+
+    {"id": "esp32c3-ds-usb", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "4.1 USB Serial/JTAG Controller",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "The ESP32-C3 integrates a USB Serial/JTAG controller. GPIO18 is USB D- and GPIO19 is USB D+. The controller provides a CDC-ACM serial port for flashing and console output and a JTAG interface for debugging over the same cable. The ESP32-C3 does not have a USB OTG peripheral, so it cannot act as a custom USB device such as a keyboard or mass-storage drive."},
+
+    {"id": "esp32c3-ds-strapping", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "2.4 Strapping Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "The ESP32-C3 has three strapping pins: GPIO2, GPIO8 and GPIO9. GPIO9 has an internal pull-up and selects the boot mode: GPIO9 high selects SPI boot, and GPIO9 low together with GPIO8 high selects download boot. Holding GPIO9 low while resetting the chip therefore enters download mode. GPIO8 additionally controls whether the ROM prints boot messages."},
+
+    {"id": "esp32c3-ds-adc", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "4.2 Analog Peripherals - ADC",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "The ESP32-C3 integrates two 12-bit SAR ADCs with 6 channels in total. ADC1 has 5 channels on GPIO0 to GPIO4, and ADC2 has 1 channel on GPIO5. The ESP32-C3 has no DAC and no capacitive touch sensor. A built-in temperature sensor is available."},
+
+    {"id": "esp32c3-ds-power", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "5 Electrical Characteristics - Power Consumption",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "The ESP32-C3 operates from a supply voltage of 3.0 V to 3.6 V. In Deep-sleep mode with the RTC timer and RTC memory powered, the chip draws 5 µA. In the power-off state, with CHIP_EN held low, it draws 1 µA."},
+
+    {"id": "esp32c3-ds-peripherals", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "4.1 Digital Peripherals Overview",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "ESP32-C3 digital peripherals include 2 UART interfaces, 1 I2C interface, 3 SPI interfaces of which SPI2 is available for general use, 1 I2S interface, an LED PWM controller with 6 channels, an RMT controller with 2 transmit and 2 receive channels, 1 TWAI controller and a general DMA controller with 3 transmit and 3 receive channels. The default UART0 pins are GPIO21 (U0TXD) and GPIO20 (U0RXD)."},
+
+    {"id": "esp32c3-ds-flash-pins", "chip": "esp32-c3", "source_type": "datasheet", "title": "ESP32-C3 Series Datasheet", "section": "2.2 Pin Overview - Restrictions",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c3_datasheet_en.pdf",
+     "text": "On the ESP32-C3, GPIO12 to GPIO17 are usually connected to the SPI flash and are not recommended for other uses. GPIO18 and GPIO19 are used by the USB Serial/JTAG controller by default. On the ESP32-C3 the second-stage bootloader is flashed at offset 0x0, the partition table at 0x8000 and the factory application at 0x10000."},
+
+    {"id": "esp32c3-idf-adc", "chip": "esp32-c3", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide (ESP32-C3) - ADC Oneshot Mode", "section": "Attenuation and Hardware Limitations",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32c3/api-reference/peripherals/adc_oneshot.html",
+     "text": "On the ESP32-C3, an ADC channel configured with ADC_ATTEN_DB_12 has a suggested measurable input range of 0 mV to 2500 mV, and the raw result is 12 bits wide. ADC2 oneshot mode is no longer supported on the ESP32-C3 because of a hardware limitation that makes its results unreliable; use the ADC1 channels on GPIO0 to GPIO4 instead."},
+
+    {"id": "esp32c6-ds-overview", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "1 Overview - CPU, Memory and Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 has a high-performance 32-bit RISC-V single-core processor running at up to 160 MHz and a low-power 32-bit RISC-V core running at up to 20 MHz. It combines three 2.4 GHz radios: Wi-Fi 6 (802.11ax), Bluetooth 5 (LE) and IEEE 802.15.4. Internal memory comprises 320 KB of ROM, 512 KB of HP SRAM and 16 KB of LP SRAM."},
+
+    {"id": "esp32c6-ds-wifi6", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "3.1 Wi-Fi Radio and Baseband",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 Wi-Fi radio operates in the 2.4 GHz band only; the 5 GHz band is not supported. It supports 802.11ax in 20 MHz-only non-AP mode and remains compatible with 802.11 b/g/n. Wi-Fi 6 features include uplink and downlink OFDMA, downlink MU-MIMO, BSS colouring and Target Wake Time (TWT), which lets a battery-powered station negotiate long sleep intervals with the access point."},
+
+    {"id": "esp32c6-ds-802154", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "3.3 IEEE 802.15.4 Radio",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 includes an IEEE 802.15.4 radio that operates in the 2.4 GHz band with O-QPSK modulation at a data rate of 250 kbps. It supports the Thread 1.3 and Zigbee 3.0 protocols. Because the chip also has Wi-Fi, a single ESP32-C6 can run 802.15.4 and Wi-Fi with coexistence, and it is commonly used for Matter over Thread and Matter over Wi-Fi devices."},
+
+    {"id": "esp32c6-ds-gpio", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "2.2 Pin Overview - GPIO",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 provides 30 programmable GPIOs in the QFN40 package and 22 in the QFN32 package. In the QFN40 package, GPIO24 to GPIO30 are usually connected to the SPI flash and are not recommended for other uses. The default UART0 pins are GPIO16 (U0TXD) and GPIO17 (U0RXD). On the ESP32-C6 the second-stage bootloader is flashed at offset 0x0."},
+
+    {"id": "esp32c6-ds-usb", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "4.1 USB Serial/JTAG Controller",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 integrates a USB Serial/JTAG controller. GPIO12 is USB D- and GPIO13 is USB D+. It provides a CDC-ACM serial port and JTAG debugging over one cable. The ESP32-C6 does not have a USB OTG peripheral."},
+
+    {"id": "esp32c6-ds-strapping", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "2.4 Strapping Pins",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 has five strapping pins: MTMS (GPIO4), MTDI (GPIO5), GPIO8, GPIO9 and GPIO15. GPIO8 and GPIO9 select the boot mode: GPIO9 high selects SPI boot, and GPIO9 low together with GPIO8 high selects download boot. GPIO15 selects the source of the JTAG signals. MTMS and MTDI select the SDIO sampling and driving clock edges."},
+
+    {"id": "esp32c6-ds-adc", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "4.2 Analog Peripherals - ADC",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "The ESP32-C6 integrates one 12-bit SAR ADC with 7 channels, on GPIO0 to GPIO6. There is no second ADC unit, no DAC and no capacitive touch sensor. A built-in temperature sensor is available."},
+
+    {"id": "esp32c6-ds-peripherals", "chip": "esp32-c6", "source_type": "datasheet", "title": "ESP32-C6 Series Datasheet", "section": "4.1 Digital Peripherals and Power Consumption",
+     "url": "https://www.espressif.com/sites/default/files/documentation/esp32-c6_datasheet_en.pdf",
+     "text": "ESP32-C6 digital peripherals include 2 UART interfaces plus 1 low-power UART, 1 I2C interface plus 1 low-power I2C, SPI2 for general use, 1 I2S interface, an LED PWM controller with 6 channels, an RMT controller with 2 transmit and 2 receive channels, 2 TWAI controllers, an SDIO 2.0 slave controller, MCPWM, a pulse counter and a parallel IO interface. In Deep-sleep mode the ESP32-C6 draws 7 µA."},
+
+    {"id": "idf-build-flash", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - Get Started", "section": "Build, Flash and Monitor",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/index.html",
+     "text": "Select the chip a project is built for with idf.py set-target followed by the target name, for example idf.py set-target esp32s3 or idf.py set-target esp32c6. Changing the target clears the build directory and regenerates sdkconfig. Build with idf.py build, then flash and open the serial monitor with idf.py -p PORT flash monitor. The monitor uses 115200 baud by default and is closed with Ctrl+]. Project options are edited with idf.py menuconfig."},
+
+    {"id": "idf-deep-sleep", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - Sleep Modes", "section": "Entering Deep-sleep and Timer Wakeup",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/sleep_modes.html",
+     "text": "Call esp_sleep_enable_timer_wakeup() with the sleep duration in microseconds to arm the RTC timer, then call esp_deep_sleep_start() to enter Deep-sleep. The function does not return: on wakeup the chip resets and the application starts again from app_main(). esp_sleep_get_wakeup_cause() reports why the chip woke up. Variables declared with the RTC_DATA_ATTR attribute are placed in RTC memory and keep their values across Deep-sleep."},
+
+    {"id": "idf-gpio-api", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - GPIO", "section": "API Usage",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/gpio.html",
+     "text": "Configure pins with gpio_config(), passing a gpio_config_t structure whose fields are pin_bit_mask, mode, pull_up_en, pull_down_en and intr_type. Drive an output with gpio_set_level() and read an input with gpio_get_level(). For per-pin interrupts, call gpio_install_isr_service() once and then gpio_isr_handler_add() for each pin. Interrupt handlers run in ISR context and must not block or call functions that log."},
+
+    {"id": "idf-wifi-station", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - Wi-Fi Driver", "section": "Station Initialisation Sequence",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/wifi.html",
+     "text": "A Wi-Fi station is started in this order: nvs_flash_init(), esp_netif_init(), esp_event_loop_create_default(), esp_netif_create_default_wifi_sta(), esp_wifi_init() with WIFI_INIT_CONFIG_DEFAULT(), esp_wifi_set_mode(WIFI_MODE_STA), esp_wifi_set_config(), esp_wifi_start() and finally esp_wifi_connect(). NVS must be initialised first because the Wi-Fi driver stores calibration data and credentials in NVS. In station mode the default power-save mode is WIFI_PS_MIN_MODEM."},
+
+    {"id": "idf-ledc", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - LED Control (LEDC)", "section": "Configuring Timers and Channels",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/ledc.html",
+     "text": "PWM output with the LEDC driver takes three steps. First configure a timer with ledc_timer_config(), which sets the PWM frequency and the duty resolution. Then bind a channel to a GPIO and to that timer with ledc_channel_config(). To change the duty cycle at run time call ledc_set_duty() followed by ledc_update_duty(). Higher PWM frequencies allow fewer bits of duty resolution, and the number of LEDC channels differs between chips."},
+
+    {"id": "idf-partition-table", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - Partition Tables", "section": "Overview and Default Offsets",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/partition-tables.html",
+     "text": "The partition table is flashed at the default offset 0x8000, which can be changed with CONFIG_PARTITION_TABLE_OFFSET. The table is 0xC00 bytes long and holds up to 95 entries. The built-in table named Single factory app, no OTA contains an nvs partition, a phy_init partition and a 1 MB factory application partition at offset 0x10000. The offset of the second-stage bootloader depends on the chip."},
+
+    {"id": "idf-freertos", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - FreeRTOS", "section": "Tick Rate and Main Task",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/freertos_idf.html",
+     "text": "ESP-IDF applications run on FreeRTOS. The tick rate is set by CONFIG_FREERTOS_HZ, whose default is 100, giving a tick period of 10 ms. Use vTaskDelay(pdMS_TO_TICKS(ms)) to delay a task for a time in milliseconds. The application entry point app_main() runs in the main task, whose stack size is set by CONFIG_ESP_MAIN_TASK_STACK_SIZE and defaults to 3584 bytes."},
+
+    {"id": "idf-adc-oneshot", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - ADC Oneshot Mode", "section": "Driver Usage",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/adc_oneshot.html",
+     "text": "Create an ADC unit handle with adc_oneshot_new_unit(), set the attenuation and bit width of a channel with adc_oneshot_config_channel(), and take a reading with adc_oneshot_read(). The raw value is converted to millivolts with adc_cali_raw_to_voltage() after a calibration scheme has been created. The measurable input range for each attenuation, the number of channels and the ADC resolution are specific to each chip."},
+
+    {"id": "idf-i2c-master", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - I2C", "section": "Master Driver",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/i2c.html",
+     "text": "With the I2C master driver, create a bus with i2c_new_master_bus(), attach each peripheral with i2c_master_bus_add_device(), and transfer data with i2c_master_transmit(), i2c_master_receive() or i2c_master_transmit_receive(). SDA and SCL can be routed to almost any GPIO through the GPIO matrix. The internal pull-ups are weak, so external pull-up resistors on SDA and SCL are recommended for reliable operation."},
+
+    {"id": "idf-nvs", "chip": "common", "source_type": "esp-idf-docs", "title": "ESP-IDF Programming Guide - Non-Volatile Storage", "section": "Reading and Writing Values",
+     "url": "https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/storage/nvs_flash.html",
+     "text": "NVS stores key-value pairs in flash. Initialise the default partition with nvs_flash_init(), open a namespace with nvs_open(), write values with functions such as nvs_set_i32() or nvs_set_str(), and call nvs_commit() to make sure the changes are written to flash. Keys are limited to 15 characters. If nvs_flash_init() returns ESP_ERR_NVS_NO_FREE_PAGES, erase the partition with nvs_flash_erase() and initialise it again."},
+
+    {"id": "forum-esp32-adc2-wifi", "chip": "esp32", "source_type": "forum", "title": "Community thread: analog readings go crazy as soon as WiFi connects", "section": "Forum discussion", "url": "",
+     "text": "Original post: I have a soil moisture sensor on GPIO4 of my ESP32 devkit. Works fine in a bare sketch, but the moment I add WiFi the readings are either 0 or 4095, sometimes the read just fails. Is my board broken? Reply 1: probably a bad power supply, WiFi pulls big current spikes, add a capacitor. Reply 2: I had this too, I thought it was the sensor and bought three of them lol. Reply 3: not the supply. GPIO4 is an ADC2 pin and ADC2 is used by the WiFi driver on the ESP32, you cannot read it while WiFi is running. Move the sensor to an ADC1 pin, GPIO32 to GPIO39. Original poster: moved it to GPIO34 and it works, thanks."},
+
+    {"id": "forum-esp32-gpio12-boot", "chip": "esp32", "source_type": "forum", "title": "Community thread: board will not boot when my sensor is plugged in", "section": "Forum discussion", "url": "",
+     "text": "Original post: my ESP32 WROOM board boots fine alone, but with my DHT22 data line on GPIO12 I only get a reset loop and flash read errors in the log. Unplug the sensor and it boots. Reply 1: is the sensor 5 V? you may have fried the pin. Reply 2: try a different USB cable, half of my problems were cables. Reply 3: GPIO12 is a strapping pin, it is MTDI and it sets the flash voltage at reset. Your sensor has a pull-up so GPIO12 is read high, the regulator switches to 1.8 V and the 3.3 V flash cannot be read. Use another pin for the sensor. Reply 4: or burn the efuse that fixes the flash voltage, but moving the wire is much safer."},
+
+    {"id": "gh-esp32s3-usb-sleep", "chip": "esp32-s3", "source_type": "github_issue", "title": "Community issue: USB serial port disappears after deep sleep on ESP32-S3", "section": "GitHub issue discussion", "url": "",
+     "text": "Issue: with the console set to USB Serial/JTAG on my ESP32-S3 board, the COM port vanishes whenever the firmware enters deep sleep and my terminal program crashes. After wakeup the port comes back with the same number, usually. Expected: the port stays open. Comment 1: same here on Linux, the tty device node is removed and re-created. Comment 2: I thought my cable was faulty. Comment 3: this is expected, the USB Serial/JTAG controller is powered down in deep sleep and light sleep so the host sees a disconnect. If you need logs across sleep, use UART0 on GPIO43 and GPIO44 with an external bridge. Comment 4: could the docs make this clearer please."},
+
+    {"id": "forum-esp32s3-free-pins", "chip": "esp32-s3", "source_type": "forum", "title": "Community thread: which pins are actually free on an S3 N16R8 devkit", "section": "Forum discussion", "url": "",
+     "text": "Original post: I am wiring a display to my ESP32-S3 devkit with the N16R8 module and it crashes at boot when I use GPIO35, GPIO36 and GPIO37. Same code works on my friend's N8 board. Reply 1: are you sure it is not a brownout? Reply 2: the R8 part means octal PSRAM, and with octal memory GPIO33 to GPIO37 are wired to the PSRAM inside the module. You cannot use them. Reply 3: also stay away from GPIO26 to GPIO32, those are flash. And GPIO19 and GPIO20 are USB. Reply 4: honestly the old ESP32 was simpler, there you just avoided GPIO6 to GPIO11. Original poster: moved to GPIO11, GPIO12, GPIO13 and it is fine now."},
+
+    {"id": "forum-esp32c3-download-mode", "chip": "esp32-c3", "source_type": "forum", "title": "Community thread: C3 mini board not detected, how to force download mode", "section": "Forum discussion", "url": "",
+     "text": "Original post: my small ESP32-C3 board does not show up for flashing after I uploaded a sketch that goes straight into deep sleep. Is it bricked? Reply 1: try holding the EN button. Reply 2: there is no way to brick it like that. Reply 3: hold the BOOT button, which pulls GPIO9 low, tap reset, then release BOOT. The chip enters download mode and the USB serial port appears again. Reply 4: on the classic ESP32 it is GPIO0, do not mix them up. Reply 5: also make sure nothing on your breadboard pulls GPIO8 low, it has to be high for download boot. Original poster: GPIO9 trick worked."},
+
+    {"id": "gh-esp32c3-adc2", "chip": "esp32-c3", "source_type": "github_issue", "title": "Community issue: ADC reading on GPIO5 returns invalid values on ESP32-C3", "section": "GitHub issue discussion", "url": "",
+     "text": "Issue: reading an analog voltage on GPIO5 of an ESP32-C3 gives random values, and with a newer ESP-IDF release the call returns an error instead. GPIO0 to GPIO4 read correctly with the same divider. Comment 1: check your attenuation, with 12 dB you only get about 2500 mV full scale. Comment 2: is WiFi on? on the ESP32 that breaks ADC2. Comment 3: different cause here. GPIO5 is the only ADC2 channel on the C3 and ADC2 oneshot is no longer supported on this chip because of a hardware limitation. Use an ADC1 channel. Comment 4: so effectively the C3 has five usable analog inputs."},
+
+    {"id": "forum-esp32c6-5ghz", "chip": "esp32-c6", "source_type": "forum", "title": "Community thread: C6 cannot see my 5 GHz WiFi 6 network", "section": "Forum discussion", "url": "",
+     "text": "Original post: I bought an ESP32-C6 because it says Wi-Fi 6, but a scan only lists my 2.4 GHz network, the 5 GHz one never appears. Antenna problem? Reply 1: update your router firmware. Reply 2: Wi-Fi 6 does not mean 5 GHz. The C6 radio is 2.4 GHz only, it does 802.11ax on 2.4 GHz with 20 MHz channels. Reply 3: you want a dual-band part for 5 GHz, that is a different chip in the family. Reply 4: the real benefit of the C6 is TWT for battery devices, and the 802.15.4 radio for Thread and Zigbee. Original poster: understood, I enabled ax on the 2.4 GHz band of my router and it connects in HE mode."},
+
+    {"id": "forum-esp32c6-zigbee-wifi", "chip": "esp32-c6", "source_type": "forum", "title": "Community thread: Zigbee and WiFi at the same time on one C6", "section": "Forum discussion", "url": "",
+     "text": "Original post: can a single ESP32-C6 be a Zigbee coordinator and stay connected to WiFi, or do I need two chips? Reply 1: I use two boards over UART, never trusted coexistence. Reply 2: it works on one chip. All three radios share one 2.4 GHz front end and are time-division multiplexed by the coexistence layer, so throughput drops when both are busy. Reply 3: for a Thread border router Espressif's reference design pairs a WiFi chip with a separate 802.15.4 chip for best performance, but the single C6 mode is fine for a small Zigbee gateway. Reply 4: remember the 802.15.4 link is only 250 kbps anyway."},
+
+    {"id": "forum-esp32s2-bluetooth", "chip": "esp32-s2", "source_type": "forum", "title": "Community thread: BLE example will not compile for my S2 board", "section": "Forum discussion", "url": "",
+     "text": "Original post: the BLE server example fails to build for my ESP32-S2 board with errors about missing Bluetooth headers. Did I install the toolchain wrong? Reply 1: reinstall everything, it fixed mine once. Reply 2: nothing is wrong with your install. The ESP32-S2 has no Bluetooth at all, it is a WiFi only chip. Reply 3: yes, the S2 trades Bluetooth for USB OTG and lots of GPIO. If you need BLE use an S3 or a C3. Reply 4: I got caught by this too, the names are confusing. Original poster: ok, switching the provisioning to SoftAP instead."},
+
+    {"id": "gh-esp32s2-usb-port", "chip": "esp32-s2", "source_type": "github_issue", "title": "Community issue: serial port number changes after flashing ESP32-S2 over native USB", "section": "GitHub issue discussion", "url": "",
+     "text": "Issue: flashing my ESP32-S2 board over its native USB works only if I hold the BOOT button and press reset first, and afterwards the port has a different name than when my firmware is running. Comment 1: use a board with a UART bridge and avoid the whole thing. Comment 2: this is expected. With GPIO0 held low at reset the ROM enumerates as its own USB CDC and DFU device. Your application then enumerates as a different USB device through the USB OTG peripheral on GPIO19 and GPIO20, so the operating system gives it another port. Comment 3: the S2 has no USB Serial/JTAG controller like the S3 and C3, that is why there is no fixed port."},
+
+    {"id": "forum-common-brownout", "chip": "common", "source_type": "forum", "title": "Community thread: Brownout detector was triggered, then endless reboot", "section": "Forum discussion", "url": "",
+     "text": "Original post: my board prints Brownout detector was triggered and restarts as soon as WiFi starts. It happens on two different boards. Reply 1: disable the brownout detector in menuconfig, problem solved. Reply 2: please do not just disable it, the detector is telling you the supply voltage dipped. Reply 3: WiFi transmit bursts draw several hundred milliamps. Thin USB cables, hubs and weak 3.3 V regulators cannot keep up. Use a short cable, a supply rated for at least 500 mA, and put a large capacitor close to the 3.3 V pin. Reply 4: my fix was powering the servo separately, it was pulling the rail down. Original poster: a better cable fixed it."},
+
+    {"id": "forum-common-guru-meditation", "chip": "common", "source_type": "forum", "title": "Community thread: Guru Meditation Error LoadProhibited at random", "section": "Forum discussion", "url": "",
+     "text": "Original post: my firmware crashes every few minutes with Guru Meditation Error: Core 0 panic'ed (LoadProhibited). Is this a hardware fault? Reply 1: flash erase and reflash, works sometimes. Reply 2: LoadProhibited means the code read from an invalid address, almost always a NULL or dangling pointer. Reply 3: decode the backtrace, idf.py monitor does it automatically and shows the file and line. Reply 4: also check task stack sizes, a stack overflow corrupts neighbouring memory and shows up as random crashes. The main task only gets 3584 bytes by default. Reply 5: on RISC-V chips the same bug is reported as a Load access fault instead."},
+
+    {"id": "forum-common-which-chip", "chip": "common", "source_type": "forum", "title": "Community thread: which ESP32 variant should I buy for my project", "section": "Forum discussion", "url": "",
+     "text": "Original post: so many variants, which one do I pick? I need WiFi, a few analog inputs and USB. Reply 1: quick list from memory, please check the datasheets. Classic ESP32: dual core, Bluetooth Classic, 18 ADC channels, 2 DACs, no USB. S2: single core, no Bluetooth, USB OTG, 20 ADC channels, 43 GPIOs. S3: dual core, BLE, USB OTG, 45 GPIOs, no DAC. C3: cheap RISC-V single core, BLE, only 6 ADC channels, 22 GPIOs. C6: RISC-V with Wi-Fi 6 and Thread and Zigbee, 7 ADC channels. Reply 2: do not forget that deep sleep current differs a lot between them. Reply 3: I just buy the S3 for everything. Reply 4: the C3 is plenty for sensors."}
+  ]
+}
