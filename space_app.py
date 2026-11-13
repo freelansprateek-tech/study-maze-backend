@@ -26,7 +26,7 @@ except ImportError:  # running this file somewhere else
     spaces = None
 
 import gradio as gr
-import uvicorn
+from starlette.routing import BaseRoute, Match
 
 from app.main import app as api
 
@@ -58,8 +58,52 @@ with gr.Blocks(title="Study Maze backend") as status_page:
         result = gr.Textbox(label="Result", interactive=False)
         gr.Button("Check the GPU").click(gpu_self_test, outputs=result)
 
-# The API routes were registered first, so they take precedence over the page at "/".
-app = gr.mount_gradio_app(api, status_page, path="/")
+
+
+class ApiPassthrough(BaseRoute):
+    """Hands every /api/* request to the unchanged FastAPI service.
+
+    ZeroGPU requires the Space to be started by Gradio's own `launch()`, so the
+    API cannot own the server. Placed first in Gradio's route table, this sends
+    API requests to the complete FastAPI app (its routes, CORS rules and error
+    handlers) and leaves everything else to Gradio.
+    """
+
+    def matches(self, scope):
+        if scope["type"] == "http" and scope["path"].startswith("/api/"):
+            return Match.FULL, {}
+        return Match.NONE, {}
+
+    async def handle(self, scope, receive, send):
+        await api(scope, receive, send)
+
+
+def preload() -> None:
+    """Load the knowledge base and both models before the first question.
+
+    The FastAPI start-up hook does this when the API owns the server; behind
+    Gradio it does not run, so it is done here.
+    """
+    from app.config import get_settings
+    from app.core import hf_runtime
+    from app.core.embeddings import get_embedder
+    from app.ingest.indexer import kb_counts
+
+    settings = get_settings()
+    print(f"Knowledge base: {sum(kb_counts(settings).values())} chunks", flush=True)
+    if settings.preload_models:
+        get_embedder()
+        hf_runtime.get_runtime(settings.classifier_model)
+        print(f"Models loaded on {hf_runtime.resolve_device(settings.device)}", flush=True)
+
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", "7860")))
+    preload()
+    server, _, _ = status_page.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.environ.get("PORT", "7860")),
+        prevent_thread_lock=True,
+        ssr_mode=False,
+    )
+    server.router.routes.insert(0, ApiPassthrough())
+    status_page.block_thread()
