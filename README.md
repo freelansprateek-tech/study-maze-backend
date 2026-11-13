@@ -1,3 +1,13 @@
+---
+title: Study Maze Backend
+emoji: 🧭
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Chip-Aware CP-RAG for ESP32 — Backend
 
 FastAPI service and CP-RAG engine for **"Chip-Aware RAG for ESP32 Technical Documentation: Mitigating Distracting Content in Question Answering"**.
